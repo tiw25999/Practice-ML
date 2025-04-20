@@ -1,0 +1,68 @@
+First five rows of the dataset:
+   # claim_status    video_id  video_duration_sec                                                                                                                   video_transcription_text verified_status author_ban_status  video_view_count  video_like_count  video_share_count  video_download_count  video_comment_count
+0  1        claim  7017666017                  59                                          someone shared with me that drone deliveries are already happening and will become common by 2025    not verified      under review          343296.0           19425.0              241.0                   1.0                  0.0
+1  2        claim  4014381136                  32                                someone shared with me that there are more microorganisms in one teaspoon of soil than people on the planet    not verified            active          140877.0           77355.0            19034.0                1161.0                684.0
+2  3        claim  9859838091                  31  someone shared with me that american industrialist andrew carnegie had a net worth of $475 million usd, worth over $300 billion usd today    not verified            active          902185.0           97690.0             2858.0                 833.0                329.0
+3  4        claim  1866847991                  25        someone shared with me that the metro of st. petersburg, with an average depth of hundred meters, is the deepest metro in the world    not verified            active          437506.0          239954.0            34812.0                1234.0                584.0
+4  5        claim  7105231098                  19           someone shared with me that the number of businesses allowing employees to bring pets to the workplace has grown by 6% worldwide    not verified            active           56167.0           34987.0             4110.0                 547.0                152.0
+
+Descriptive statistics before preprocessing:
+                  #      video_id  video_duration_sec  video_view_count  video_like_count  video_share_count  video_download_count  video_comment_count
+count  19382.000000  1.938200e+04        19382.000000      19084.000000      19084.000000       19084.000000          19084.000000         19084.000000
+mean    9691.500000  5.627454e+09           32.421732     254708.558688      84304.636030       16735.248323           1049.429627           349.312146
+std     5595.245794  2.536440e+09           16.229967     322893.280814     133420.546814       32036.174350           2004.299894           799.638865
+min        1.000000  1.234959e+09            5.000000         20.000000          0.000000           0.000000              0.000000             0.000000
+25%     4846.250000  3.430417e+09           18.000000       4942.500000        810.750000         115.000000              7.000000             1.000000
+50%     9691.500000  5.618664e+09           32.000000       9954.500000       3403.500000         717.000000             46.000000             9.000000
+75%    14536.750000  7.843960e+09           47.000000     504327.000000     125020.000000       18222.000000           1156.250000           292.000000
+max    19382.000000  9.999873e+09           60.000000     999817.000000     657830.000000      256130.000000          14994.000000          9599.000000
+
+Descriptive statistics after preprocessing:
+       video_duration_sec  video_view_count  video_like_count  video_share_count  video_download_count  video_comment_count
+count        15639.000000      15639.000000      15639.000000       15639.000000          15639.000000         15639.000000
+mean            32.343117     308488.888164     102530.481616       20343.491783           1279.447087           426.257753
+std             16.223162     332224.568011     140798.779212       34296.400688           2146.774317           864.572037
+min              5.000000        214.000000         67.000000           1.000000              1.000000             1.000000
+25%             18.000000       6941.000000       1561.500000         259.000000             18.000000             3.000000
+50%             32.000000     175194.000000      28749.000000        3181.000000            199.000000            40.000000
+75%             46.000000     596194.500000     164436.000000       26075.500000           1651.000000           442.000000
+max             60.000000     999817.000000     657830.000000      256130.000000          14994.000000          9599.000000
+
+Class balance:
+claim_status
+claim      9511
+opinion    6128
+
+Mapping of categorical variables:
+{'claim_status': {'claim': 0, 'opinion': 1}, 'verified_status': {'not verified': 0, 'verified': 1}, 'author_ban_status': {'active': 0, 'banned': 1, 'under review': 2}}
+
+Descriptive statistics after feature engineering:
+       claim_status  video_duration_sec  verified_status  author_ban_status  video_view_count  video_like_count  video_share_count  video_download_count  video_comment_count  video_transcription_text_length
+count  15639.000000        15639.000000     15639.000000       15639.000000      15639.000000      15639.000000       15639.000000          15639.000000         15639.000000                     15639.000000
+mean       0.391841           32.343117         0.052369           0.341006     308488.888164     102530.481616       20343.491783           1279.447087           426.257753                        90.476117
+std        0.488177           16.223162         0.222777           0.683536     332224.568011     140798.779212       34296.400688           2146.774317           864.572037                        20.685164
+min        0.000000            5.000000         0.000000           0.000000        214.000000         67.000000           1.000000              1.000000             1.000000                        31.000000
+25%        0.000000           18.000000         0.000000           0.000000       6941.000000       1561.500000         259.000000             18.000000             3.000000                        76.000000
+50%        0.000000           32.000000         0.000000           0.000000     175194.000000      28749.000000        3181.000000            199.000000            40.000000                        88.000000
+75%        1.000000           46.000000         0.000000           0.000000     596194.500000     164436.000000       26075.500000           1651.000000           442.000000                       103.000000
+max        1.000000           60.000000         1.000000           2.000000     999817.000000     657830.000000      256130.000000          14994.000000          9599.000000                       182.000000
+
+Training set shape: (10947, 9)
+Testing set shape: (4692, 9)
+
+Best Parameters: {'max_depth': 15, 'max_samples': 0.8, 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 100}
+
+Best Score: 0.9949759173618193
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.99      1.00      2883
+           1       0.99      1.00      0.99      1809
+
+    accuracy                           1.00      4692
+   macro avg       0.99      1.00      1.00      4692
+weighted avg       1.00      1.00      1.00      4692
+
+Accuracy: 0.9953111679454391, Precision: 0.9953504856969201, Recall: 0.9953111679454391, F1 Score: 0.9953154323703012
+
